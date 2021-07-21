@@ -1,0 +1,7 @@
+package ua.in.lsrv.freelance.exception;
+
+public class CommentNotFoundException extends RuntimeException {
+    public CommentNotFoundException(String message) {
+        super(message);
+    }
+}
