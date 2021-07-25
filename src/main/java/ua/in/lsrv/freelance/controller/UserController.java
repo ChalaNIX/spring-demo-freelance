@@ -18,9 +18,9 @@ import java.security.Principal;
 @CrossOrigin
 @RequestMapping("/api/user")
 public class UserController {
-    private UserService userService;
-    private UserFacade userFacade;
-    private ResponseErrorValidator responseErrorValidator;
+    private final UserService userService;
+    private final UserFacade userFacade;
+    private final ResponseErrorValidator responseErrorValidator;
 
     @Autowired
     public UserController(UserService userService, UserFacade userFacade, ResponseErrorValidator responseErrorValidator) {

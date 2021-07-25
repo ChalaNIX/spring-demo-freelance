@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RequestMapping("/api/comment")
 public class CommentController {
-    private CommentService commentService;
-    private CommentFacade commentFacade;
-    private ResponseErrorValidator responseErrorValidator;
+    private final CommentService commentService;
+    private final CommentFacade commentFacade;
+    private final ResponseErrorValidator responseErrorValidator;
 
     public CommentController(CommentService commentService, CommentFacade commentFacade, ResponseErrorValidator responseErrorValidator) {
         this.commentService = commentService;

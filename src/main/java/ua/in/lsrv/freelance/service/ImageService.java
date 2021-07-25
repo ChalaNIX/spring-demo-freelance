@@ -20,18 +20,16 @@ import java.security.Principal;
 public class ImageService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class.getName());
 
-    private ImageRepository imageRepository;
-    private UserPrincipalUtil userPrincipalUtil;
-    private UserRepository userRepository;
+    private final ImageRepository imageRepository;
+    private final UserPrincipalUtil userPrincipalUtil;
     
     @Autowired
-    public ImageService(ImageRepository imageRepository, UserPrincipalUtil userPrincipalUtil, UserRepository userRepository) {
+    public ImageService(ImageRepository imageRepository, UserPrincipalUtil userPrincipalUtil) {
         this.imageRepository = imageRepository;
         this.userPrincipalUtil = userPrincipalUtil;
-        this.userRepository = userRepository;
     }
 
-    public Image uploadUserImage(MultipartFile image, Principal principal) {
+    public void uploadUserImage(MultipartFile image, Principal principal) {
         User user = userPrincipalUtil.getUserByPrincipal(principal);
         LOGGER.info("Uploading profile image for user {}", user.getUsername());
         Image userImage = imageRepository.findByUserId(user.getId())
@@ -45,12 +43,11 @@ public class ImageService {
             imageForUpload.setUserId(user.getId());
             imageForUpload.setImage(ImageCompressionUtil.compressImage(image.getBytes()));
             imageForUpload.setName(image.getOriginalFilename());
-            return imageRepository.save(imageForUpload);
+            imageRepository.save(imageForUpload);
 
         } catch (IOException e) {
             LOGGER.error("Cannot save user profile image: " + e.getMessage());
         }
-        return null;
     }
 
     public Image getUserImage(long userId) {
@@ -60,7 +57,6 @@ public class ImageService {
         if (!ObjectUtils.isEmpty(image)) {
             image.setImage(ImageCompressionUtil.decompressImage(image.getImage()));
         }
-
         return image;
     }
 }

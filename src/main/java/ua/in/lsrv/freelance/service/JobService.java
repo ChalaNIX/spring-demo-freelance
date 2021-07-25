@@ -41,22 +41,24 @@ public class JobService {
     }
 
     public List<Job> getAllJobs() {
-        return jobRepository.findAll();
+        return jobRepository.findAllByOrderByCreateDateDesc();
     }
 
     public List<Job> getAllJobsForUser(Principal principal) {
         User user = userPrincipalUtil.getUserByPrincipal(principal);
-        return jobRepository.findAllByUser(user);
+        return jobRepository.findAllByUserOrderByCreateDateDesc(user);
     }
 
-    public Job getJobById(long jobId, Principal principal) {
-        User user = userPrincipalUtil.getUserByPrincipal(principal);
-        return jobRepository.findJobsByIdAndUser(jobId, user)
-                .orElseThrow(() -> new JobNotFoundException("Cannot find job with id" + jobId+ " for user " + user.getUsername()));
+    public Job getJobById(long jobId) {
+        Job job = jobRepository.findJobById(jobId)
+                .orElseThrow(() -> new JobNotFoundException("Cannot find job with id" + jobId));
+        return job;
     }
 
     public void deleteJob(long jobId, Principal principal) {
-        Job job = getJobById(jobId, principal);
+        User user = userPrincipalUtil.getUserByPrincipal(principal);
+        Job job = jobRepository.findJobByIdAndUser(jobId, user)
+                .orElseThrow(() -> new JobNotFoundException("Cannot find job with id" + jobId+ " for user " + user.getUsername()));
         jobRepository.delete(job);
     }
 }

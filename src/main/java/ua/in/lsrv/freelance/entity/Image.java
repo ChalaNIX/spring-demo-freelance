@@ -1,11 +1,16 @@
 package ua.in.lsrv.freelance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 public class Image {
     @Id
@@ -23,4 +28,13 @@ public class Image {
     @Column
     @JsonIgnore
     private long userId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Image image = (Image) o;
+
+        return Objects.equals(id, image.id);
+    }
 }
