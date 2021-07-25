@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.in.lsrv.freelance.entity.Image;
 import ua.in.lsrv.freelance.payload.MessageResponse;
 import ua.in.lsrv.freelance.service.ImageService;
+import ua.in.lsrv.freelance.util.UserPrincipalUtil;
 
 import java.security.Principal;
 
@@ -15,10 +16,12 @@ import java.security.Principal;
 @RequestMapping("/api/image")
 public class ImageController {
     private ImageService imageService;
+    private UserPrincipalUtil userPrincipalUtil;
 
     @Autowired
-    public ImageController(ImageService imageService) {
+    public ImageController(ImageService imageService, UserPrincipalUtil userPrincipalUtil) {
         this.imageService = imageService;
+        this.userPrincipalUtil = userPrincipalUtil;
     }
 
     @PostMapping("/upload")
@@ -31,6 +34,12 @@ public class ImageController {
     @GetMapping("/{userId}")
     public ResponseEntity<Image> getUserImage(@PathVariable String userId) {
         Image image = imageService.getUserImage(Long.parseLong(userId));
+        return ResponseEntity.ok(image);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<Image> getProfileImage(Principal principal) {
+        Image image = imageService.getUserImage(userPrincipalUtil.getUserByPrincipal(principal).getId());
         return ResponseEntity.ok(image);
     }
 }

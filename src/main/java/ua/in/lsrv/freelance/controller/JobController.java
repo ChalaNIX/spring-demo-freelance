@@ -67,4 +67,11 @@ public class JobController {
         jobService.deleteJob(Long.parseLong(jobId), principal);
         return ResponseEntity.ok(new MessageResponse("Job is deleted"));
     }
+
+    @GetMapping("/{jobId}")
+    public ResponseEntity<JobDto> getJobById(@PathVariable String jobId, Principal principal) {
+        Job job = jobService.getJobById(Long.parseLong(jobId), principal);
+        JobDto jobDto = jobFacade.jobToDto(job);
+        return ResponseEntity.ok(jobDto);
+    }
 }
