@@ -31,9 +31,10 @@ import java.util.Random;
 
 @SpringBootTest
 public class FreelanceTest {
-    private OkHttpClient httpClient = new OkHttpClient();
-    private MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    private Gson gson = new Gson();
+    private final OkHttpClient httpClient = new OkHttpClient();
+    private final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private final Gson gson = new Gson();
+
 
     private final String URL = "http://localhost:8080/api/";
 
@@ -134,7 +135,7 @@ public class FreelanceTest {
 
         String userJson = gson.toJson(signUpRequest);
 
-        RequestBody body = RequestBody.create(JSON, userJson);
+        RequestBody body = RequestBody.create(userJson, JSON);
 
         Request registerRequest = new Request.Builder()
                 .url(URL + "auth/signup")
