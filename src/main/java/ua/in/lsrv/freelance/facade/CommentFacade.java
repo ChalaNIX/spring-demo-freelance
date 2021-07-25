@@ -10,7 +10,7 @@ public class CommentFacade {
         CommentDto commentDto = new CommentDto();
         commentDto.setMessage(comment.getMessage());
         commentDto.setUsername(comment.getUser().getUsername());
-        commentDto.setCommentDate(comment.getCreateDate());
+        commentDto.setCommentDate(comment.getCreateDate().toString());
 
         return commentDto;
     }

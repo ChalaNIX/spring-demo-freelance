@@ -12,7 +12,7 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;

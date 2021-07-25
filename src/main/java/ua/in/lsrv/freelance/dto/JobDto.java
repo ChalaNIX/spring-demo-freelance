@@ -14,4 +14,7 @@ public class JobDto {
     private String description;
     @PositiveOrZero
     private double price;
+
+    private String user;
+    private int noOfComments;
 }
