@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RequestMapping("/api/job")
 public class JobController {
-    private JobService jobService;
-    private JobFacade jobFacade;
-    private ResponseErrorValidator responseErrorValidator;
+    private final JobService jobService;
+    private final JobFacade jobFacade;
+    private final ResponseErrorValidator responseErrorValidator;
 
     @Autowired
     public JobController(JobService jobService, JobFacade jobFacade, ResponseErrorValidator responseErrorValidator) {
@@ -69,8 +69,8 @@ public class JobController {
     }
 
     @GetMapping("/{jobId}")
-    public ResponseEntity<JobDto> getJobById(@PathVariable String jobId, Principal principal) {
-        Job job = jobService.getJobById(Long.parseLong(jobId), principal);
+    public ResponseEntity<JobDto> getJobById(@PathVariable String jobId) {
+        Job job = jobService.getJobById(Long.parseLong(jobId));
         JobDto jobDto = jobFacade.jobToDto(job);
         return ResponseEntity.ok(jobDto);
     }

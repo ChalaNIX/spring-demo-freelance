@@ -10,7 +10,7 @@ import java.security.Principal;
 
 @Component
 public class UserPrincipalUtil {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserPrincipalUtil(UserRepository userRepository) {

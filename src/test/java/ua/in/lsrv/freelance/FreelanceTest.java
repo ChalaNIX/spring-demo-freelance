@@ -49,7 +49,7 @@ public class FreelanceTest {
     @Test
     public void appTest() throws IOException {
         Faker faker = new Faker();
-        List<UpworkJob> upworkJobs = parseHtml();
+        List<JsonJob> jsonJobs = parseHtml();
         Random random = new Random();
 
         List<User> users = new ArrayList<>();
@@ -72,16 +72,16 @@ public class FreelanceTest {
             updateUser(user, token);
         }
 
-        int jobsNum = upworkJobs.size();
+        int jobsNum = jsonJobs.size();
 
         for (int i=0; i<jobsNum; i++) {
             User user = users.get(random.nextInt(users.size()));
 
-            UpworkJob upworkJob = upworkJobs.get(0);
+            JsonJob jsonJob = jsonJobs.get(0);
 
             Job job = new Job();
-            job.setTitle(upworkJob.title);
-            job.setDescription(upworkJob.description);
+            job.setTitle(jsonJob.title);
+            job.setDescription(jsonJob.description);
             job.setPrice(faker.number().numberBetween(1,19)*100);
             job.setUser(user);
             job.setCommentList(new ArrayList<>());
@@ -90,7 +90,7 @@ public class FreelanceTest {
 
             String token = loginAsUser(user);
             createJob(job, token);
-            upworkJobs.remove(upworkJob);
+            jsonJobs.remove(jsonJob);
         }
 
         for (int i=0; i<10; i++) {
@@ -108,22 +108,22 @@ public class FreelanceTest {
         }
     }
 
-    private List<UpworkJob> parseHtml() throws IOException {
+    private List<JsonJob> parseHtml() throws IOException {
         String file = new ClassPathResource("jobs.json", this.getClass().getClassLoader()).getFile().getAbsolutePath();
         StringBuilder jsonBuilder = new StringBuilder();
 
         Files.readAllLines(Paths.get(file)).forEach(jsonBuilder::append);
-        List<UpworkJob> upworkJobs = new ArrayList<>();
+        List<JsonJob> jsonJobs = new ArrayList<>();
 
-        Type type = new TypeToken<ArrayList<UpworkJob>>() {}.getType();
-        List<UpworkJob> list = gson.fromJson(jsonBuilder.toString(), type);
+        Type type = new TypeToken<ArrayList<JsonJob>>() {}.getType();
+        List<JsonJob> list = gson.fromJson(jsonBuilder.toString(), type);
 
         for (int i=0; i<2; i++) {
-            UpworkJob upworkJob = list.get(i);
-            upworkJobs.add(upworkJob);
+            JsonJob jsonJob = list.get(i);
+            jsonJobs.add(jsonJob);
         }
 
-        return upworkJobs;
+        return jsonJobs;
     }
 
     private void registerUser(User user) throws IOException {
@@ -215,7 +215,7 @@ public class FreelanceTest {
         private String token;
     }
 
-    private static class UpworkJob {
+    private static class JsonJob {
         private String title, description;
     }
 }

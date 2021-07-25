@@ -27,10 +27,10 @@ import javax.validation.Valid;
 @PreAuthorize("permitAll()")
 public class AuthController {
 
-    private JWTTokenProvider jwtTokenProvider;
-    private AuthenticationManager authenticationManager;
-    private ResponseErrorValidator responseErrorValidator;
-    private UserService userService;
+    private final JWTTokenProvider jwtTokenProvider;
+    private final AuthenticationManager authenticationManager;
+    private final ResponseErrorValidator responseErrorValidator;
+    private final UserService userService;
 
     @Autowired
     public AuthController(JWTTokenProvider jwtTokenProvider,

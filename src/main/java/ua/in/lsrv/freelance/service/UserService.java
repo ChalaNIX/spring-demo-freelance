@@ -17,11 +17,11 @@ import java.security.Principal;
 
 @Service
 public class UserService {
-    private static Logger LOGGER = LoggerFactory.getLogger(UserService.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class.getName());
 
-    private UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private UserPrincipalUtil userPrincipalUtil;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserPrincipalUtil userPrincipalUtil;
 
     @Autowired
     public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, UserPrincipalUtil userPrincipalUtil) {
@@ -30,7 +30,7 @@ public class UserService {
         this.userPrincipalUtil = userPrincipalUtil;
     }
 
-    public User createUser(SignUpRequest signUpRequest) {
+    public void createUser(SignUpRequest signUpRequest) {
         User user = new User();
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(bCryptPasswordEncoder.encode(signUpRequest.getConfirmPassword()));
@@ -38,7 +38,7 @@ public class UserService {
 
         LOGGER.info("Saving user {}", user.getUsername());
         try {
-            return userRepository.save(user);
+            userRepository.save(user);
         } catch (Exception e) {
             LOGGER.error("Cannot save user to database: " + e.getMessage());
             throw new RuntimeException("User " + user.getUsername() + " is not created");

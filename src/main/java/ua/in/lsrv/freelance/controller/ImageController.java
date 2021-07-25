@@ -15,8 +15,8 @@ import java.security.Principal;
 @CrossOrigin
 @RequestMapping("/api/image")
 public class ImageController {
-    private ImageService imageService;
-    private UserPrincipalUtil userPrincipalUtil;
+    private final ImageService imageService;
+    private final UserPrincipalUtil userPrincipalUtil;
 
     @Autowired
     public ImageController(ImageService imageService, UserPrincipalUtil userPrincipalUtil) {

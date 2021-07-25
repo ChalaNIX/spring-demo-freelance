@@ -21,9 +21,9 @@ import java.util.List;
 public class CommentService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommentService.class.getName());
 
-    private CommentRepository commentRepository;
-    private JobRepository jobRepository;
-    private UserPrincipalUtil userPrincipalUtil;
+    private final CommentRepository commentRepository;
+    private final JobRepository jobRepository;
+    private final UserPrincipalUtil userPrincipalUtil;
 
     @Autowired
     public CommentService(CommentRepository commentRepository, JobRepository jobRepository, UserPrincipalUtil userPrincipalUtil) {
