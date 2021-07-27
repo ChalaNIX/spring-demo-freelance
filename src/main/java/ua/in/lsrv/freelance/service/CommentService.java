@@ -50,12 +50,6 @@ public class CommentService {
     public List<Comment> getAllJobComments(long jobId) {
         Job job = jobRepository.findJobById(jobId)
                 .orElseThrow(() -> new JobNotFoundException("Cannot find job with id " + jobId));
-        return commentRepository.findAllByJob(job);
-    }
-
-    public void deleteComment(Long commentId) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new CommentNotFoundException("Cannot find comment with id " + commentId));
-        commentRepository.delete(comment);
+        return commentRepository.findAllByJobOrderByCreateDateDesc(job);
     }
 }
