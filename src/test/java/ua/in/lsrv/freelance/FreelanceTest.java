@@ -47,7 +47,7 @@ public class FreelanceTest {
     @Autowired
     private CommentFacade commentFacade;
 
-    @Test
+//    @Test
     public void appTest() throws IOException {
         Faker faker = new Faker();
         List<JsonJob> jsonJobs = parseHtml();
@@ -61,6 +61,7 @@ public class FreelanceTest {
             String lastName = faker.name().lastName();
             String userName = String.format("%s.%s", name.toLowerCase(), lastName.toLowerCase());
             String password = "pass12345";
+            System.out.println("Saving user: " + userName);
 
             User user = new User();
             user.setUsername(userName);
@@ -114,17 +115,10 @@ public class FreelanceTest {
         StringBuilder jsonBuilder = new StringBuilder();
 
         Files.readAllLines(Paths.get(file)).forEach(jsonBuilder::append);
-        List<JsonJob> jsonJobs = new ArrayList<>();
 
         Type type = new TypeToken<ArrayList<JsonJob>>() {}.getType();
-        List<JsonJob> list = gson.fromJson(jsonBuilder.toString(), type);
 
-        for (int i=0; i<2; i++) {
-            JsonJob jsonJob = list.get(i);
-            jsonJobs.add(jsonJob);
-        }
-
-        return jsonJobs;
+        return gson.fromJson(jsonBuilder.toString(), type);
     }
 
     private void registerUser(User user) throws IOException {
