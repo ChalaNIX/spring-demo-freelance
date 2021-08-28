@@ -6,4 +6,5 @@ This app is configured to use H2 in-memory database, this DB is deleted on app s
 
 OpenAPI is added.
 URL for API descrioption: https://freelance.lsrv.in.ua/swagger-ui/index.html
+
 URL for SwaggerUI: https://freelance.lsrv.in.ua/swagger-ui/index.html
