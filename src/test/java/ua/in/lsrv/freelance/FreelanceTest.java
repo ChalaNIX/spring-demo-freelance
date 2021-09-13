@@ -29,23 +29,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@SpringBootTest
 public class FreelanceTest {
     private final OkHttpClient httpClient = new OkHttpClient();
     private final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private final Gson gson = new Gson();
 
+    private final String URL = "http://localhost:8081/api/";
 
-    private final String URL = "http://localhost:8080/api/";
+    private UserFacade userFacade = new UserFacade();
 
-    @Autowired
-    private UserFacade userFacade;
+    private JobFacade jobFacade = new JobFacade();
 
-    @Autowired
-    private JobFacade jobFacade;
-
-    @Autowired
-    private CommentFacade commentFacade;
+    private CommentFacade commentFacade = new CommentFacade();
 
 //    @Test
     public void appTest() throws IOException {
