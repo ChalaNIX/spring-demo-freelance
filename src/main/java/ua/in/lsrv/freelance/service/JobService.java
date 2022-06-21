@@ -18,8 +18,8 @@ import java.util.List;
 public class JobService {
     private static final Logger LOGGER = LoggerFactory.getLogger(JobService.class.getName());
 
-    private JobRepository jobRepository;
-    private UserPrincipalUtil userPrincipalUtil;
+    private final JobRepository jobRepository;
+    private final UserPrincipalUtil userPrincipalUtil;
 
     @Autowired
     public JobService(JobRepository jobRepository, UserPrincipalUtil userPrincipalUtil) {
