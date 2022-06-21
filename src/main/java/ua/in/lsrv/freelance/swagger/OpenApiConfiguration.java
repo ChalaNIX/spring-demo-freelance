@@ -15,7 +15,7 @@ public class OpenApiConfiguration {
     @Bean
     public OpenAPI customOpenAPI() {
         String securitySchemeName = "bearerAuth";
-        return new OpenAPI().addServersItem(new Server().url("https://freelance.lsrv.in.ua/"))
+        return new OpenAPI()
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
                 .components(new Components().addSecuritySchemes(securitySchemeName,
                         new SecurityScheme()
